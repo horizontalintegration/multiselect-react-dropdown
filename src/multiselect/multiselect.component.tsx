@@ -488,7 +488,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     
     const optionListContainer = this.optionListContainer.current;
 
-    if (this.observer) optionListContainer.style.visibility = 'hidden';
+    {/* if (this.observer) optionListContainer.style.visibility = 'hidden'; */}
   }
 
   connectObserver() {
@@ -522,15 +522,9 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     }
   }
 
-  /*
-   * NOTE:
-   * The onBlur event applies to the search box input. In Webkit browsers, this handler causes the menu to close on using the mouse/scrollbar to scroll the list of options.
-   * As current use cases of this control do not implement the search feature, the blur handler is being intentionally disabled as a workaround for the described issue.
-   */
-
   onBlur(e){
     // @ts-ignore
-    {/* this.optionTimeout = setTimeout(this.toggleOptionList, 250); */}
+    this.optionTimeout = setTimeout(this.toggleOptionList, 250);
   }
 
   onSelectOrClick(){
@@ -558,10 +552,8 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     const { inputValue, toggleOptionsList, selectedValues } = this.state;
     const { placeholder, style, singleSelect, id, hidePlaceholder, disable, showArrow} = this.props;
     return (
-      <div className={`multiselect-container multiSelectContainer ${disable ? `disable_ms` : ''}`} id={id || 'multiselectContainerReact'} style={style['multiselectContainer']}>
-        <div className={`search-wrapper searchWrapper ${singleSelect ? 'singleSelect' : ''}`} 
-          ref={this.searchWrapper} style={style['searchBox']}
-        >
+      <div className={`multiselect-container multiSelectContainer ${disable ? `disable_ms` : ''}`} id={id || 'multiselectContainerReact'} onBlur={this.onBlur} onFocus={this.onFocus} style={style['multiselectContainer']} tabIndex="0">
+        <div className={`search-wrapper searchWrapper ${singleSelect ? 'singleSelect' : ''}`} ref={this.searchWrapper} style={style['searchBox']}>
           {this.renderSelectedList()}
           <input
 						type="text"
@@ -570,8 +562,6 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
             id={`${id || 'search'}_input`}
             onChange={this.onChange}
             value={inputValue}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
             onClick={this.onSelectOrClick}
             placeholder={((singleSelect && selectedValues.length) || (hidePlaceholder && selectedValues.length)) ? '' : placeholder}
             onKeyDown={this.onArrowKeyNavigation}
@@ -580,10 +570,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
             disabled={disable}
             readOnly={true}
           />
-          {(singleSelect || showArrow) && <img
-            src={DownArrow}
-            className={`icon_cancel icon_down_dir`}
-          />}
+          {(singleSelect || showArrow) && <img src={DownArrow} className={`icon_cancel icon_down_dir`} />}
         </div>
         <div
           className={`optionListContainer ${
