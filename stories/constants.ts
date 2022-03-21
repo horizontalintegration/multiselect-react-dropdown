@@ -7,7 +7,14 @@ export const options = [
   { key: "Option 4", cat: "Group 2" },
   { key: "Option 5", cat: "Group 2" },
   { key: "Option 6", cat: "Group 2" },
-  { key: "Option 7", cat: "Group 2" }
+  { key: "Option 7", cat: "Group 2" },
+  { key: "Option 8", cat: "Group 1" },
+  { key: "Option 9", cat: "Group 1" },
+  { disabled: true, key: "Option 10", cat: "Group 1" },
+  { key: "Option 11", cat: "Group 2" },
+  { key: "Option 12", cat: "Group 2" },
+  { key: "Option 13", cat: "Group 2" },
+  { key: "Option 14", cat: "Group 2" }
 ];
 
 export const selectedValues = [
