@@ -488,7 +488,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     
     const optionListContainer = this.optionListContainer.current;
 
-    {/* if (this.observer) optionListContainer.style.visibility = 'hidden'; */}
+    if (this.observer) optionListContainer.style.visibility = 'hidden';
   }
 
   connectObserver() {
@@ -524,7 +524,9 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
 
   onBlur(e){
     // @ts-ignore
-    this.optionTimeout = setTimeout(this.toggleOptionList, 250);
+    if(this.state.toggleOptionsList) {
+      this.optionTimeout = setTimeout(this.toggleOptionList, 250);
+    }
   }
 
   onSelectOrClick(){
