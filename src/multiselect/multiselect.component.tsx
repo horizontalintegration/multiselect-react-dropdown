@@ -15,6 +15,8 @@ const closeIconTypes = {
   cancel: CloseLine
 };
 
+const CLASS_IS_ACTIVE = 'isActive';
+
 function useOutsideAlerter(ref, clickEvent) {
   useEffect(() => {
       function handleClickOutside(event) {
@@ -63,6 +65,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
 		this.searchWrapper = React.createRef();
     // @ts-ignore
 		this.searchBox = React.createRef();
+    this.searchWrapper = React.createRef();
     this.observer = ('IntersectionObserver' in window ? new IntersectionObserver((entries, observer) => this.onIntersection(entries, observer)) : null);
     this.optionListContainer = React.createRef();
     this.onChange = this.onChange.bind(this);
@@ -507,6 +510,8 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
       toggleOptionsList: !this.state.toggleOptionsList,
       highlightOption: this.props.avoidHighlightFirstOption ? -1 : 0
     });
+
+    this.searchWrapper.current.classList.toggle(CLASS_IS_ACTIVE);
 
     // If the options list needs to open up, temporarily force it to a hidden state.
     // This prevents the list from flashing on screen in its usual downward orientation before being repositioned above the activating button.
