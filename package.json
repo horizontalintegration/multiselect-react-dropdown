@@ -8,6 +8,7 @@
     "dev": "webpack-dev-server",
     "build": "webpack",
     "build-tsdx": "tsdx build",
+    "prepare": "npm run build-tsdx",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
