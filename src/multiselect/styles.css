@@ -1,4 +1,7 @@
-*, ::after, ::before {
+.multiSelectContainer,
+.multiSelectContainer *,
+.multiSelectContainer ::after, 
+.multiSelectContainer ::before {
   box-sizing: border-box;
 }
 
@@ -10,6 +13,9 @@
 .disable_ms {
   pointer-events: none;
   opacity: 0.5;
+}
+.display-none {
+  display: none;
 }
 .searchWrapper {
   border: 1px solid #cccccc;
@@ -84,7 +90,6 @@
   margin-right: 10px;
 }
 .disableSelection {
-  cursor: default;
   pointer-events: none;
   opacity: 0.5;
 }
