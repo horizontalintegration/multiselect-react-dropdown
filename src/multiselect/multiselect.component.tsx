@@ -604,6 +604,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
             autoComplete="off"
             disabled={singleSelect || disable}
             readOnly={true}
+            tabIndex={0}
           />
           {(singleSelect || showArrow) && (
             <>
