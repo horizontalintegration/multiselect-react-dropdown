@@ -17,7 +17,7 @@ const closeIconTypes = {
 
 const CLASS_IS_ACTIVE = 'isActive';
 
-function useOutsideAlerter(ref, clickEvent) { console.log('useOutsideAlerter');
+function useOutsideAlerter(ref, clickEvent) {
   useEffect(() => {
       function handleClickOutside(event) {
           if (ref.current && !ref.current.contains(event.target)) {
@@ -602,7 +602,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
             onKeyDown={this.onArrowKeyNavigation}
             style={style['inputField']}
             autoComplete="off"
-            disabled={singleSelect || disable}
+            disabled={disable}
             readOnly={true}
             tabIndex={0}
           />
