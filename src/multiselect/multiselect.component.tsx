@@ -17,7 +17,7 @@ const closeIconTypes = {
 
 const CLASS_IS_ACTIVE = 'isActive';
 
-function useOutsideAlerter(ref, clickEvent) {
+function useOutsideAlerter(ref, clickEvent) { console.log('useOutsideAlerter');
   useEffect(() => {
       function handleClickOutside(event) {
           if (ref.current && !ref.current.contains(event.target)) {
@@ -548,7 +548,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     });
   }
 
-  onFocus() { console.log('onFocus');
+  onFocus() {
     if (this.state.toggleOptionsList) {
       // @ts-ignore
       clearTimeout(this.optionTimeout);
