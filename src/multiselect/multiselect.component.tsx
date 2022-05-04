@@ -548,7 +548,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     });
   }
 
-  onFocus(){
+  onFocus() { console.log('onFocus');
     if (this.state.toggleOptionsList) {
       // @ts-ignore
       clearTimeout(this.optionTimeout);
