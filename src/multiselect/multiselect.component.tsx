@@ -461,6 +461,8 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
           className="icon_cancel closeIcon"
           src={closeIconType}
           onClick={() => this.onRemoveSelectedItem(value)}
+          onKeyUp={(e) => { (e?.code || e?.keyCode) === 13 && this.onRemoveSelectedItem(value); }}
+          tabIndex={0}
         /> : !singleSelect ? <i className="custom-close" onClick={() => this.onRemoveSelectedItem(value)}>{customCloseIcon}</i> : null)}
       </span>
     ));
