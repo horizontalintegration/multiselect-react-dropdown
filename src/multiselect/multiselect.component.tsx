@@ -581,7 +581,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     const { inputValue, toggleOptionsList, selectedValues } = this.state;
     const { placeholder, style, singleSelect, id, name, hidePlaceholder, disable, showArrow, className, customArrow } = this.props;
     return (
-      <div className={`multiselect-container multiSelectContainer ${disable ? `disable_ms` : ''} ${className || ''}`} id={id || 'multiselectContainerReact'} style={style['multiselectContainer']}>
+      <div className={`multiselect-container multiSelectContainer ${disable ? `disable_ms` : ''} ${className || ''}`} id={id || 'multiselectContainerReact'} style={style['multiselectContainer']} tabIndex={0}>
         <div className={`search-wrapper searchWrapper ${singleSelect ? 'singleSelect' : ''}`}
           ref={this.searchWrapper} style={style['searchBox']}
           onClick={singleSelect ? this.toggelOptionList : () => {}}
@@ -590,7 +590,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
           <input
 						type="text"
 						ref={this.searchBox}
-            className={`searchBox ${singleSelect && selectedValues.length ? 'display-none' : ''}`}
+            className="searchBox"
             id={`${id || 'search'}_input`}
 	          name={`${name || 'search_name'}_input`}
             onChange={this.onChange}
