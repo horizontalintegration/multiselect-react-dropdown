@@ -507,7 +507,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     }
   }
 
-  toggelOptionList() {
+  toggelOptionList() { console.log('toggelOptionList', !this.state.toggleOptionsList);
     this.setState({
       toggleOptionsList: !this.state.toggleOptionsList,
       highlightOption: this.props.avoidHighlightFirstOption ? -1 : 0
@@ -542,12 +542,14 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     });
   }
 
-  onCloseOptionList() {
+  onCloseOptionList() { console.log('onCloseOptionList');
     this.setState({
       toggleOptionsList: false,
       highlightOption: this.props.avoidHighlightFirstOption ? -1 : 0,
       inputValue: ''
     });
+
+    this.searchWrapper.current.classList.remove(CLASS_IS_ACTIVE);
   }
 
   onFocus() {
@@ -559,7 +561,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     }
   }
 
-  onBlur(){
+  onBlur() {
     this.setState({ inputValue: '' }, this.filterOptionsByInput);
     // @ts-ignore
     this.optionTimeout = setTimeout(this.onCloseOptionList, 250);
@@ -584,10 +586,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     const { placeholder, style, singleSelect, id, name, hidePlaceholder, disable, showArrow, className, customArrow } = this.props;
     return (
       <div className={`multiselect-container multiSelectContainer ${disable ? `disable_ms` : ''} ${className || ''}`} id={id || 'multiselectContainerReact'} style={style['multiselectContainer']}>
-        <div className={`search-wrapper searchWrapper ${singleSelect ? 'singleSelect' : ''}`}
-          ref={this.searchWrapper} style={style['searchBox']}
-          onClick={singleSelect ? this.toggelOptionList : () => {}}
-        >
+        <div className={`search-wrapper searchWrapper ${singleSelect ? 'singleSelect' : ''}`} ref={this.searchWrapper} style={style['searchBox']}>
           {this.renderSelectedList()}
           <input
 						type="text"
@@ -596,7 +595,6 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
             id={`${id || 'search'}_input`}
 	          name={`${name || 'search_name'}_input`}
             onChange={this.onChange}
-            onClick={this.onFocus}
             onKeyPress={this.onKeyPress}
             value={inputValue}
             onFocus={this.onFocus}
