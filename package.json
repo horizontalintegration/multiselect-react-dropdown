@@ -1,12 +1,13 @@
 {
   "name": "multiselect-react-dropdown",
-  "version": "2.0.20",
+  "version": "2.0.5",
   "description": "React multiselect dropdown component with search and various features",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack",
+    "prepare": "npm run build-tsdx",
     "build-tsdx": "tsdx build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -45,9 +46,10 @@
     "rollup-plugin-postcss": "^4.0.0",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^4.2.3",
+    "ts-loader": "^8.2.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.2.0",
-    "typescript": "^4.3.2",
+    "typescript": "^4.4.4",
     "url-loader": "^1.1.2",
     "webpack": "^4.40.6",
     "webpack-cli": "^3.3.11",

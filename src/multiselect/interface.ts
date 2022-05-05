@@ -10,13 +10,11 @@ export interface IMultiselectProps {
     selectionLimit?: any,
     placeholder?: string,
     groupBy?: string,
-    loading?: boolean,
     style?: object,
     emptyRecordMsg?: string,
     onSelect?: (selectedList:any, selectedItem: any) => void,
     onRemove?: (selectedList:any, selectedItem: any) => void,
     onSearch?: (value:string) => void,
-    onKeyPressFn?: (event:any, value:string) => void,
     closeIcon?: string,
     singleSelect?: boolean,
     caseSensitiveSearch?: boolean,
@@ -26,8 +24,5 @@ export interface IMultiselectProps {
     hidePlaceholder?: boolean,
     showArrow?: boolean,
     keepSearchTerm?: boolean,
-    customCloseIcon?: React.ReactNode | string,
-    customArrow?: any;
-    disable?: boolean;
-    className?: string;
+    customCloseIcon?: React.ReactNode | string
 }
