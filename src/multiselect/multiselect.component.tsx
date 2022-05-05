@@ -596,6 +596,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
             id={`${id || 'search'}_input`}
 	          name={`${name || 'search_name'}_input`}
             onChange={this.onChange}
+            onClick={this.onFocus}
             onKeyPress={this.onKeyPress}
             value={inputValue}
             onFocus={this.onFocus}
