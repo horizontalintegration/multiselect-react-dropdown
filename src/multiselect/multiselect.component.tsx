@@ -15,8 +15,6 @@ const closeIconTypes = {
   cancel: CloseLine
 };
 
-const CLASS_IS_ACTIVE = 'isActive';
-
 function useOutsideAlerter(ref, clickEvent) {
   useEffect(() => {
       function handleClickOutside(event) {
@@ -65,9 +63,6 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
 		this.searchWrapper = React.createRef();
     // @ts-ignore
 		this.searchBox = React.createRef();
-    this.searchWrapper = React.createRef();
-    this.observer = ('IntersectionObserver' in window ? new IntersectionObserver((entries, observer) => this.onIntersection(entries, observer)) : null);
-    this.optionListContainer = React.createRef();
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -405,7 +400,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
               <li
                 key={`option${i}`}
                 style={style['option']}
-                className={`groupChildEle option ${isSelected ? 'selected' : ''} ${this.fadeOutSelection(option) ? 'disableSelection' : ''} ${this.isDisablePreSelectedValues(option) ? 'disableSelection' : ''} ${option.disabled && 'disableSelection'}`}
+                className={`groupChildEle option ${isSelected ? 'selected' : ''} ${this.fadeOutSelection(option) ? 'disableSelection' : ''} ${this.isDisablePreSelectedValues(option) ? 'disableSelection' : ''}`}
                 onClick={() => this.onSelectItem(option)}
               >
                 {showCheckbox && !singleSelect && (
@@ -434,7 +429,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
           <li
             key={`option${i}`}
             style={style['option']}
-            className={`option${isSelected ? ' selected' : ''}${highlightOption === i ? ' highlightOption highlight' : ''}${this.fadeOutSelection(option) ? ' disableSelection' : ''}${this.isDisablePreSelectedValues(option) ? ' disableSelection' : ''}${option.disabled ? ' disableSelection' : ''}`}
+            className={`option ${isSelected ? 'selected' : ''} ${highlightOption === i ? `highlightOption highlight` : ""} ${this.fadeOutSelection(option) ? 'disableSelection' : ''} ${this.isDisablePreSelectedValues(option) ? 'disableSelection' : ''}`}
             onClick={() => this.onSelectItem(option)}
           >
             {showCheckbox && !singleSelect && (
@@ -457,13 +452,12 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     return selectedValues.map((value, index) => (
       <span className={`chip  ${singleSelect && 'singleChip'} ${this.isDisablePreSelectedValues(value) && 'disableSelection'}`} key={index} style={style['chips']}>
         {!isObject ? (value || '').toString() : value[displayValue]}
-        {!this.isDisablePreSelectedValues(value) && (!customCloseIcon && !singleSelect ? <img
+        {!this.isDisablePreSelectedValues(value) && (!customCloseIcon ? <img
           className="icon_cancel closeIcon"
           src={closeIconType}
           onClick={() => this.onRemoveSelectedItem(value)}
-          onKeyUp={(e) => { (e?.code || e?.keyCode) === 13 && this.onRemoveSelectedItem(value); }}
           tabIndex={0}
-        /> : !singleSelect ? <i className="custom-close" onClick={() => this.onRemoveSelectedItem(value)}>{customCloseIcon}</i> : null)}
+        /> : <i className="custom-close" onClick={() => this.onRemoveSelectedItem(value)}>{customCloseIcon}</i>)}
       </span>
     ));
   }
@@ -507,52 +501,22 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     }
   }
 
-  toggelOptionList() { console.log('toggelOptionList', !this.state.toggleOptionsList);
+  toggelOptionList() {
     this.setState({
       toggleOptionsList: !this.state.toggleOptionsList,
       highlightOption: this.props.avoidHighlightFirstOption ? -1 : 0
     });
-
-    this.searchWrapper.current.classList.toggle(CLASS_IS_ACTIVE);
-
-    // If the options list needs to open up, temporarily force it to a hidden state.
-    // This prevents the list from flashing on screen in its usual downward orientation before being repositioned above the activating button.
-    if (this.observer) this.optionListContainer.current.style.visibility = 'hidden';
   }
 
-  connectObserver() {
-    if (!this.observer) return;
-    
-    if (this.optionListContainer.current) {
-      this.observer.observe(this.optionListContainer.current);
-    }
-  }
-
-  onIntersection (entries, observer) {
-    entries.forEach(entry => {
-      const target = entry.target;
-
-      if (target.getBoundingClientRect().top + target.offsetHeight > window.innerHeight) {
-        target.style.bottom = '100%';
-      } else {
-        target.style.bottom = 'auto';
-      }
-    
-      target.style.visibility = 'visible';
-    });
-  }
-
-  onCloseOptionList() { console.log('onCloseOptionList');
+  onCloseOptionList() {
     this.setState({
       toggleOptionsList: false,
       highlightOption: this.props.avoidHighlightFirstOption ? -1 : 0,
       inputValue: ''
     });
-
-    this.searchWrapper.current.classList.remove(CLASS_IS_ACTIVE);
   }
 
-  onFocus() {
+  onFocus(){
     if (this.state.toggleOptionsList) {
       // @ts-ignore
       clearTimeout(this.optionTimeout);
@@ -561,7 +525,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     }
   }
 
-  onBlur() {
+  onBlur(){
     this.setState({ inputValue: '' }, this.filterOptionsByInput);
     // @ts-ignore
     this.optionTimeout = setTimeout(this.onCloseOptionList, 250);
@@ -586,12 +550,15 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
     const { placeholder, style, singleSelect, id, name, hidePlaceholder, disable, showArrow, className, customArrow } = this.props;
     return (
       <div className={`multiselect-container multiSelectContainer ${disable ? `disable_ms` : ''} ${className || ''}`} id={id || 'multiselectContainerReact'} style={style['multiselectContainer']}>
-        <div className={`search-wrapper searchWrapper ${singleSelect ? 'singleSelect' : ''}`} ref={this.searchWrapper} style={style['searchBox']}>
+        <div className={`search-wrapper searchWrapper ${singleSelect ? 'singleSelect' : ''}`}
+          ref={this.searchWrapper} style={style['searchBox']}
+          onClick={singleSelect ? this.toggelOptionList : () => {}}
+        >
           {this.renderSelectedList()}
           <input
 						type="text"
 						ref={this.searchBox}
-            className="searchBox"
+            className={`searchBox ${singleSelect && selectedValues.length ? 'display-none' : ''}`}
             id={`${id || 'search'}_input`}
 	          name={`${name || 'search_name'}_input`}
             onChange={this.onChange}
@@ -603,8 +570,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
             onKeyDown={this.onArrowKeyNavigation}
             style={style['inputField']}
             autoComplete="off"
-            disabled={disable}
-            readOnly={true}
+            disabled={singleSelect || disable}
             tabIndex={0}
           />
           {(singleSelect || showArrow) && (
@@ -620,10 +586,8 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
           onMouseDown={(e) => {
             e.preventDefault();
           }}
-          ref={this.optionListContainer}
         >
           {this.renderOptionList()}
-          {this.connectObserver()}
         </div>
       </div>
     );
